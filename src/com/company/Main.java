@@ -1,10 +1,15 @@
 package com.company;
+import com.company.game.*;
+
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Memory");
-        System.out.println("Memory");
+
+        // input amount of players
+        Game game = new Game(2);
+        game.playGame();
+
+
     }
 }
-
