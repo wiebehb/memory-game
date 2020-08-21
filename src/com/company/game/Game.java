@@ -1,30 +1,39 @@
 package com.company.game;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Game {
 
     private int players;
 
-
-
     public Game(int numberOfPlayers) {
         this.players = numberOfPlayers;
     }
 
 
+    // get user input within range of memory cards
+    public int getIntInput(int sizeCards) {
+        Scanner intReader = new Scanner(System.in);
+
+        while(true) {
+            int currentInput = intReader.nextInt();
+
+            if(currentInput >= 0 && currentInput < sizeCards){
+                return currentInput;
+            }
+
+            System.out.println("Not within range cards, try again");
+        }
+    }
+
+
     public void playGame() {
-
-        // set players
-        Player p = new Player(players);
-
-        // generate card overview
-        Card c = new Card();
+        Player p = new Player(players); // set players
+        Card c = new Card(); // generate card overview
         c.generateCards();
 
-
-        int playerOnSet = 1; // game always begins with player 1
-        Scanner scan = new Scanner(System.in);
+        int playerOnSet = 0; // game begins with player 0
+        int guessOne, guessTwo, cardOne, cardTwo;
 
 
         // play game
@@ -33,45 +42,42 @@ public class Game {
             // first round
             System.out.println("Player " + playerOnSet + " , choose your first card");
             System.out.println(c.getCards());
-            int guessOne = scan.nextInt();
-            int cardOne = c.getCards(guessOne);
+            guessOne = getIntInput(c.getSizeCards());
+            cardOne = c.getCards(guessOne);
 
 
             // second round
             System.out.println("Player " + playerOnSet + " , choose your second card");
-            System.out.println(c.getCards());
-            int guessTwo = scan.nextInt();
-            int cardTwo = c.getCards(guessTwo);
-
-            System.out.println(cardOne + " " + cardTwo);
-
+            //System.out.println(c.getCards());
+            guessTwo = getIntInput(c.getSizeCards());
+            cardTwo = c.getCards(guessTwo);
 
 
             // in case of matched pairs, add 1 point to the player on set
             if(cardOne == cardTwo) {
                 System.out.println("Matched pairs");
-                //p.AddScore(playerOnSet); // add 1 point to player on set
-                c.setCards(guessOne);
-                c.setCards(guessTwo);
+                p.AddScore(playerOnSet); // add 1 point to player on set
+                c.setCards(cardOne, cardTwo);
 
+                if(c.getSizeCards() == 0) {
+                    p.printWinner();
+                    break;
+                }
 
-                System.out.println(p.getScoreCardPlayer(playerOnSet));
 
             } else if (cardOne != cardTwo) {
                 System.out.println("Try again");
             }
 
 
-
+            // next player
             playerOnSet++;
 
+            if (playerOnSet == players) {
+                playerOnSet = 0;
+            }
 
-            System.out.println("player " + playerOnSet);
-
+            System.out.println();
         }
-
-
-
-
     }
 }

@@ -1,5 +1,5 @@
 package com.company.game;
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Card {
@@ -31,12 +31,21 @@ public class Card {
     }
 
 
-    public int setCards(int position) { // delete card position
-        return cards.remove(position);
+    public void setCards(int positionOne, int positionTwo) { // delete card position
+        int posOne = cards.indexOf(positionOne);
+        cards.remove(posOne);
+
+        int posTwo = cards.indexOf(positionTwo);
+        cards.remove(posTwo);
     }
 
 
     public ArrayList<Integer> getCards() {
         return cards;
+    }
+
+
+    public int getSizeCards() {
+        return cards.size();
     }
 }

@@ -9,7 +9,5 @@ public class Main {
         // input amount of players
         Game game = new Game(2);
         game.playGame();
-
-
     }
 }
